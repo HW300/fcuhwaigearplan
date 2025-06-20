@@ -29,22 +29,23 @@ Integration of inspection data and knowledge base with machine learning and gene
 | workstation_number       | text        | 作業站編號              |
 | part_number              | text        | 品名                    |
 | part_name                | text        | 品號                |
-| specification            | text        | 規格                |
+| status                   | text        | 狀態                |
 | measurement_data         | text        | 靜態尺寸量測數據，包含內孔圓徑、齒厚、外徑、同心度、偏擺等(json格式)   |
 | create_time              | timestamp   | 建立時間（預設為 now） |
 
 #### `gear_inspection_data.dynamic_inspection`
 
-| 欄位名稱            | 類型        | 說明                          |
-|---------------------|-------------|-------------------------------|
-| id                  | integer      | 主鍵，自動遞增               |
-| work_number         | text        | 工單編號                      |
-| part_number         | text        | 品名                      |
-| part_name           | text        | 品號                      |
-| extra_params        | text        | 齒輪相關參數，包含模數、齒數、壓力角、節圓直徑、螺旋角、齒輪比、中心距(json格式)         |
-| vibration_features  | text        | 動態量測振動特徵，包含時/頻域特徵(json格式)         |
-| sft_tol             | text        | 動態量測傳動誤差數據，包含單齒誤差(Fi’)、齒輪跳動誤差 (fi’)、長波誤差(fl’)、短波誤差 (fk’)(json格式)         |
-| create_time         | timestamp   | 建立時間（預設為 now）       |
+| 欄位名稱                  | 類型        | 說明                          |
+|--------------------------|-------------|-------------------------------|
+| id                       | integer     | 主鍵，自動遞增                 |
+| inspection_order_number  | text        | 檢查單號                      |
+| part_number              | text        | 品名                          |
+| part_name                | text        | 品號                          |
+| extra_params             | text        | 齒輪相關參數，包含模數、齒數、壓力角、節圓直徑、螺旋角、齒輪比、中心距(json格式)  |
+| vibration_features       | text        | 動態量測振動特徵，包含時/頻域特徵(json格式)  |
+| sft_tol                  | text        | 動態量測傳動誤差數據，包含單齒誤差(Fi’)、齒輪跳動誤差 (fi’)、長波誤差(fl’)、短波誤差 (fk’)(json格式)  |
+| encode                   | text        |流水號                         |
+| create_time              | timestamp   | 建立時間（預設為 now）         |
 
 ---
 
@@ -53,27 +54,28 @@ Integration of inspection data and knowledge base with machine learning and gene
 ```sql
 CREATE SCHEMA IF NOT EXISTS gear_inspection_data;
 
-CREATE TABLE gear_inspection_data.static_inspection (
-  "id" integer PRIMARY KEY,
-  "inspector" text,
-  "inspection_date" TIMESTAMP,
-  "inspection_order_number" text,
-  "work_number" text,
-  "workstation_number" text,
-  "part_number" text,
-  "part_name" text,
-  "specification" text,
-  "measurement_data" text,
-  "create_time" TIMESTAMP DEFAULT now()
+CREATE TABLE gear_inspection_data.static_inspection (  
+"id" serial PRIMARY KEY,  
+"inspector" text,  
+"inspection_date" TIMESTAMP,  
+"inspection_order_number" text,  
+"work_number" text,  
+"workstation_number" text,  
+"part_number" text,  
+"part_name" text,  
+"status" text,  
+"measurement_data" text,  
+"create_time" TIMESTAMP DEFAULT (now())
 );
 
-CREATE TABLE gear_inspection_data.dynamic_inspection (
-  "id" integer PRIMARY KEY,
-  "work_number" text,
-  "part_number" text,
-  "part_name" text,
-  "extra_params" text,
-  "vibration_features" text,
-  "sft_tol" text,
-  "create_time" TIMESTAMP DEFAULT now()
+CREATE TABLE gear_inspection_data.dynamic_inspection(  
+"id" serial PRIMARY KEY,  
+"inspection_order_number" text,  
+"part_number" text,  
+"part_name" text,  
+"extra_params" text,  
+"vibration_features" text,  
+"sft_tol" text,  
+"encode" text,
+"create_time" TIMESTAMP DEFAULT (now())
 );
