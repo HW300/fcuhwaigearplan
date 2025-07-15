@@ -33,9 +33,9 @@ cur = conn.cursor()
 #cur.execute("DROP TABLE IF EXISTS gear_inspection_data.dynamic_inspection CASCADE;")
 #conn.commit()
 
-# 建立資料表
+# 建立資料表（如果尚未存在）
 create_table_sql = """
-CREATE TABLE gear_inspection_data.dynamic_inspection (
+CREATE TABLE IF NOT EXISTS gear_inspection_data.dynamic_inspection (
     id SERIAL PRIMARY KEY,
     inspection_order_number TEXT,
     part_number TEXT,
