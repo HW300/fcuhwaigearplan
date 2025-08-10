@@ -1,0 +1,33 @@
+---BASESET---,,Report columns
+DrivingConfig:,1TH-00037,Driving Part Number:
+DrivenConfig:,1TH-00038,Driven Part Number:
+DrivingSerialNo:,1TH00037,Driving Part Name:
+DrivenSerialNo:,1TH00038,Driven Part Name:
+DrivingNum:,20,No. of teeth (Z1):
+DrivenNum:,20,No. of teeth (Z2):
+Module:,2,Module:
+ToothWidth:,14,Face Width:
+AxisAngle:,90,Shaft Angle(£U):
+DrivingPDTheoretical:,40,
+DrivingPDReal:,40,Pitch diameter:
+DrivenPDTheoretical:,40,
+DrivenPDReal:,40,Pitch diameter:
+HelixAngle:,35,Spiral Angle(£U):
+PressureAngle:,20,
+TestAngle:,0.5,
+MeasureTurns:,1,
+RPM:,3,
+Rule:,DIN3965,
+Unit:,um,
+SetFi:,8,"Perm
+Qual"
+Setfii:,8,
+Setfl:,8,
+Setfk:,8,
+SetFiValue:,69,
+SetfiiValue:,34,
+SetflValue:,59,
+SetfkValue:,37,
+SetBacklashValue:,50,
+SetBacklashLimitValue:,100,
+------,,
