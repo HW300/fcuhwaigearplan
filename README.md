@@ -1,5 +1,5 @@
 # fcuhwaigearplan
-
+Test
 Integration of inspection data and knowledge base with machine learning and generative AI for a smart gearbox inspection production line.
 
 ## 📂 靜動態檢驗資料庫說明（PostgreSQL）
