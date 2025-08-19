@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage*
+htmlcov/
+.cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/editor
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+*.log
+
+# Local configs
+*.local.json
+*.env
+
+# Project large assets (adjust as needed)
+STL_data/
+
+# Others
+.mypy_cache/
+pytestdebug.log

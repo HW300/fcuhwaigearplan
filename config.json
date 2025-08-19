@@ -1,0 +1,86 @@
+{
+  "gear_parameters": {
+    "pinion": {
+      "teeth": 20,
+      "module": 2.0,
+      "rpm": 2000,
+      "description": "小齒輪參數"
+    },
+    "gear": {
+      "teeth": 20,
+      "module": 2.0,
+      "rpm": 2000,
+      "description": "大齒輪參數 (齒數比 1:1)"
+    }
+  },
+  
+  "position_parameters": {
+    "default_x_distance": 24,
+    "default_y_distance": -31,
+    "default_rotation_offset": 10.0,
+    "x_range": [-10, 50],
+    "y_range": [-80, 20],
+    "rotation_range": [-45, 45],
+    "description": "齒輪位置控制參數"
+  },
+  
+  "analysis_parameters": {
+    "default_sample_rate": 5,
+    "sample_rate_range": [2, 20],
+    "interference_thresholds": {
+      "severe_interference": 2.0,
+      "medium_interference": 1.0,
+      "mild_interference": 0.5,
+      "contact_threshold": 0.5,
+      "near_contact_threshold": 1.0
+    },
+    "description": "干涉分析參數"
+  },
+  
+  "vibration_parameters": {
+    "sampling_frequency": 10000,
+    "signal_duration": 2.0,
+    "base_amplitude": 1.0,
+    "noise_base_level": 1.1,
+    "fault_multiplier_max": 6.0,
+    "harmonics": {
+      "pinion_harmonics": 8,
+      "gear_harmonics": 8,
+      "mesh_harmonics": 6,
+      "sideband_orders": 4
+    },
+    "fault_frequencies": {
+      "enable_bearing_faults": true,
+      "enable_gear_faults": true,
+      "enable_misalignment": true
+    },
+    "description": "振動模擬參數"
+  },
+  
+  "visualization_parameters": {
+    "figure_width": 1000,
+    "figure_height": 800,
+    "marker_sizes": {
+      "severe": 8,
+      "medium": 6,
+      "mild": 4,
+      "contact": 3
+    },
+    "colors": {
+      "pinion": "blue",
+      "gear": "red",
+      "severe_interference": "darkred",
+      "medium_interference": "orange",
+      "mild_interference": "yellow",
+      "contact": "lightgreen"
+    },
+    "description": "可視化參數"
+  },
+  
+  "export_parameters": {
+    "vibration_data_format": "npz",
+    "include_metadata": true,
+    "compression": true,
+    "description": "匯出參數"
+  }
+}
