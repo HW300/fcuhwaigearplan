@@ -37,7 +37,7 @@ def test_features_from_real_pipeline():
     }
 
     # 計算特徵
-    from RL_project.features.Bevel_gear_vibration_features import compute_feature_values_from_vibration
+    from Project.features.Bevel_gear_vibration_features import compute_feature_values_from_vibration
     features = compute_feature_values_from_vibration(vibration_data)
 
     # 基本檢查

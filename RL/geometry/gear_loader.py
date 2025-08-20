@@ -7,16 +7,16 @@ import math
 import os
 
 class GearLoader:
-    def __init__(self, stl_path="/Users/rich/Documents/code/gear2D_proj/RL_project/STL_data"):
+    def __init__(self, stl_path="../STL_data"):
         """
         初始化齒輪載入器
         
         Args:
-            stl_path: STL檔案路徑
+            stl_path: STL檔案相對路徑
         """
-        self.stl_path = stl_path
-        self.pinion_path = f"{stl_path}/Pinion_1TH00038_v2.0.STL"
-        self.gear_path = f"{stl_path}/Gear_1TH00037_v2.0.STL"
+        self.stl_path = os.path.join(os.path.dirname(__file__), stl_path)
+        self.pinion_path = os.path.join(self.stl_path, "Pinion_1TH00038_v2.0.STL")
+        self.gear_path = os.path.join(self.stl_path, "Gear_1TH00037_v2.0.STL")
         
     def load_stl_files(self):
         """
