@@ -36,8 +36,11 @@ htmlcov/
 *.local.json
 *.env
 
+#Private data
+*.STL
+
 # Project large assets (adjust as needed)
-STL_data/
+#STL_data/
 
 # Others
 .mypy_cache/
