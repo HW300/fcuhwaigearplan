@@ -1,0 +1,342 @@
+[
+  {
+    "cell": "A1",
+    "value": "Bevel Gear Inspection Form",
+    "is_merged": true
+  },
+  {
+    "cell": "H1",
+    "value": "Figure",
+    "is_merged": true
+  },
+  {
+    "cell": "A2",
+    "value": "Inspection Data",
+    "is_merged": true
+  },
+  {
+    "cell": "A3",
+    "value": "Driving Part Number:",
+    "is_merged": false
+  },
+  {
+    "cell": "B3",
+    "value": 123,
+    "is_merged": false
+  },
+  {
+    "cell": "C3",
+    "value": "Driven Part Number:",
+    "is_merged": true
+  },
+  {
+    "cell": "F3",
+    "value": 123,
+    "is_merged": false
+  },
+  {
+    "cell": "G3",
+    "value": "Inspection Date:",
+    "is_merged": true
+  },
+  {
+    "cell": "J3",
+    "value": 123,
+    "is_merged": false
+  },
+  {
+    "cell": "A4",
+    "value": "Driving Part Name:",
+    "is_merged": false
+  },
+  {
+    "cell": "B4",
+    "value": 123,
+    "is_merged": false
+  },
+  {
+    "cell": "C4",
+    "value": "Driven Part Name:",
+    "is_merged": true
+  },
+  {
+    "cell": "F4",
+    "value": 123,
+    "is_merged": false
+  },
+  {
+    "cell": "G4",
+    "value": "Inspectors:",
+    "is_merged": true
+  },
+  {
+    "cell": "J4",
+    "value": 123,
+    "is_merged": false
+  },
+  {
+    "cell": "A5",
+    "value": "Bevel Gear Specifications",
+    "is_merged": true
+  },
+  {
+    "cell": "A6",
+    "value": "Driving",
+    "is_merged": true
+  },
+  {
+    "cell": "C6",
+    "value": "Driven",
+    "is_merged": true
+  },
+  {
+    "cell": "A7",
+    "value": "No. of teeth (Z1):",
+    "is_merged": false
+  },
+  {
+    "cell": "B7",
+    "value": 20,
+    "is_merged": false
+  },
+  {
+    "cell": "C7",
+    "value": "No. of teeth (Z2):",
+    "is_merged": true
+  },
+  {
+    "cell": "F7",
+    "value": 20,
+    "is_merged": false
+  },
+  {
+    "cell": "G7",
+    "value": "Shaft Angle(Σ):",
+    "is_merged": true
+  },
+  {
+    "cell": "J7",
+    "value": 90,
+    "is_merged": false
+  },
+  {
+    "cell": "A8",
+    "value": "Module:",
+    "is_merged": false
+  },
+  {
+    "cell": "B8",
+    "value": 2,
+    "is_merged": false
+  },
+  {
+    "cell": "C8",
+    "value": "Module:",
+    "is_merged": true
+  },
+  {
+    "cell": "F8",
+    "value": 2,
+    "is_merged": false
+  },
+  {
+    "cell": "G8",
+    "value": "Spiral Angle(Σ):",
+    "is_merged": true
+  },
+  {
+    "cell": "J8",
+    "value": 35,
+    "is_merged": false
+  },
+  {
+    "cell": "A9",
+    "value": "Pitch diameter:",
+    "is_merged": false
+  },
+  {
+    "cell": "B9",
+    "value": 40,
+    "is_merged": false
+  },
+  {
+    "cell": "C9",
+    "value": "Pitch diameter:",
+    "is_merged": true
+  },
+  {
+    "cell": "F9",
+    "value": 40,
+    "is_merged": false
+  },
+  {
+    "cell": "G9",
+    "value": "Face Width:", 
+    "is_merged": true
+  },
+  {
+    "cell": "J9",
+    "value": 14,
+    "is_merged": false
+  },
+  {
+    "cell": "A10",
+    "value": "M.D:",
+    "is_merged": false
+  },
+  {
+    "cell": "B10",
+    "value": 28.268,
+    "is_merged": false
+  },
+  {
+    "cell": "C10",
+    "value": "M.D:",
+    "is_merged": true
+  },
+  {
+    "cell": "F10",
+    "value": 30.22,
+    "is_merged": false
+  },
+  {
+    "cell": "G10",
+    "value": "Gear Ratio:",
+    "is_merged": true
+  },
+  {
+    "cell": "J10",
+    "value": 1,
+    "is_merged": false
+  },
+  {
+    "cell": "A11",
+    "value": "Figure 1",
+    "is_merged": true
+  },
+  {
+    "cell": "A12",
+    "value": "Figure 2",
+    "is_merged": true
+  },
+  {
+    "cell": "A13",
+    "value": "Figure 3",
+    "is_merged": true
+  },
+  {
+    "cell": "A14",
+    "value": "Figure 4",
+    "is_merged": true
+  },
+  {
+    "cell": "A15",
+    "value": "Tangential Composite error(μm)",
+    "is_merged": true
+  },
+  {
+    "cell": "B15",
+    "value": "DIN 3965",
+    "is_merged": true
+  },
+  {
+    "cell": "C15",
+    "value": "CW",
+    "is_merged": true
+  },
+  {
+    "cell": "G15",
+    "value": "CCW",
+    "is_merged": true
+  },
+  {
+    "cell": "C16",
+    "value": "Actual.",
+    "is_merged": false
+  },
+  {
+    "cell": "D16",
+    "value": "Qual.",
+    "is_merged": false
+  },
+  {
+    "cell": "E16",
+    "value": "Perm.",
+    "is_merged": false
+  },
+  {
+    "cell": "F16",
+    "value": "Qual.",
+    "is_merged": false
+  },
+  {
+    "cell": "G16",
+    "value": "Actual.",
+    "is_merged": false
+  },
+  {
+    "cell": "H16",
+    "value": "Qual.",
+    "is_merged": false
+  },
+  {
+    "cell": "I16",
+    "value": "Perm.",
+    "is_merged": false
+  },
+  {
+    "cell": "J16",
+    "value": "Qual.",
+    "is_merged": false
+  },
+  {
+    "cell": "A17",
+    "value": "Total composite deviation",
+    "is_merged": false
+  },
+  {
+    "cell": "B17",
+    "value": "Fi'",
+    "is_merged": false
+  },
+  {
+    "cell": "A18",
+    "value": "Single flank composite error",
+    "is_merged": false
+  },
+  {
+    "cell": "B18",
+    "value": "fi'",
+    "is_merged": false
+  },
+  {
+    "cell": "A19",
+    "value": "Long wave composite",
+    "is_merged": false
+  },
+  {
+    "cell": "B19",
+    "value": "fl'",
+    "is_merged": false
+  },
+  {
+    "cell": "A20",
+    "value": "Short wave composite",
+    "is_merged": false
+  },
+  {
+    "cell": "B20",
+    "value": "fk'",
+    "is_merged": false
+  },
+  {
+    "cell": "A21",
+    "value": "Backlash",
+    "is_merged": false
+  },
+  {
+    "cell": "B21",
+    "value": "J",
+    "is_merged": false
+  }
+]
