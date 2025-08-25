@@ -7,6 +7,11 @@ import trimesh
 from typing import Dict, List, Tuple, Any
 from config_manager import ConfigManager
 from scipy.spatial.distance import cdist
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DEBUG=int(os.getenv("DEBUG", 0))
 
 class GearInterferenceAnalyzer:
     def __init__(self):
@@ -33,12 +38,13 @@ class GearInterferenceAnalyzer:
         self.interference_data = {}
         self.analysis_results = {}
         
-        print(f"干涉分析器初始化完成")
-        print(f"  輕微干涉閾值: {self.distance_threshold_mild} mm (重疊深度)")
-        print(f"  中度干涉閾值: {self.distance_threshold_medium} mm (重疊深度)")
-        print(f"  嚴重干涉閾值: {self.distance_threshold_severe} mm (重疊深度)")
-        print(f"  接觸閾值: {self.contact_threshold} mm (間隙)")
-        print(f"  接近接觸閾值: {self.near_contact_threshold} mm (間隙)")
+        if (DEBUG):
+            print(f"干涉分析器初始化完成")
+            print(f"  輕微干涉閾值: {self.distance_threshold_mild} mm (重疊深度)")
+            print(f"  中度干涉閾值: {self.distance_threshold_medium} mm (重疊深度)")
+            print(f"  嚴重干涉閾值: {self.distance_threshold_severe} mm (重疊深度)")
+            print(f"  接觸閾值: {self.contact_threshold} mm (間隙)")
+            print(f"  接近接觸閾值: {self.near_contact_threshold} mm (間隙)")
 
         
     def analyze_interference(self, pinion_vertices, pinion_faces, 
@@ -56,27 +62,31 @@ class GearInterferenceAnalyzer:
         Returns:
             dict: 干涉分析結果
         """
-        print(f"=== 齒輪重疊分析 (改進版，樣本率: {sample_rate}) ===")
-        
+        if (DEBUG):
+            print(f"=== 齒輪重疊分析 (改進版，樣本率: {sample_rate}) ===")
+
         # 重建齒輪mesh物件
         mesh_pinion = trimesh.Trimesh(vertices=pinion_vertices, faces=pinion_faces)
         mesh_gear = trimesh.Trimesh(vertices=gear_vertices, faces=gear_faces)
-        
-        print(f"小齒輪頂點數: {len(pinion_vertices)}")
-        print(f"大齒輪頂點數: {len(gear_vertices)}")
+
+        if (DEBUG):
+            print(f"小齒輪頂點數: {len(pinion_vertices)}")
+            print(f"大齒輪頂點數: {len(gear_vertices)}")
         
         # 計算中心距離
         center_p = np.mean(pinion_vertices, axis=0)
         center_g = np.mean(gear_vertices, axis=0)
         center_distance = np.linalg.norm(center_p - center_g)
-        
-        print(f"齒輪中心距離: {center_distance:.2f} mm")
-        
+
+        if (DEBUG):
+            print(f"齒輪中心距離: {center_distance:.2f} mm")
+
         # 使用更智能的取樣策略
         vp_sample = self._smart_sampling(pinion_vertices, sample_rate)
         vg_sample = self._smart_sampling(gear_vertices, sample_rate)
-        
-        print(f"分析樣本點數 - 小齒輪: {len(vp_sample)}, 大齒輪: {len(vg_sample)}")
+
+        if (DEBUG):
+            print(f"分析樣本點數 - 小齒輪: {len(vp_sample)}, 大齒輪: {len(vg_sample)}")
         
         # 改進的干涉檢測演算法
         interference_data = self._advanced_interference_detection(
@@ -115,9 +125,10 @@ class GearInterferenceAnalyzer:
             'interference_metrics': interference_data['metrics'],
             'analysis_method': 'enhanced_geometric_analysis'
         }
-        
-        self._print_analysis_results()
-        
+
+        if(DEBUG):
+            self._print_analysis_results()
+
         return self.analysis_results
     
     def _smart_sampling(self, vertices, sample_rate):
@@ -192,11 +203,13 @@ class GearInterferenceAnalyzer:
             min_dist_g_to_p = distances_g_to_p.copy()
             min_dist_g_to_p[inside_p] = -min_dist_g_to_p[inside_p]  # 內部點為負距離
             
-            print(f"✅ 使用點到面距離檢測（支援負距離）")
+            if(DEBUG):
+                print(f"✅ 使用點到面距離檢測（支援負距離）")
             
             # 如果檢測到大範圍重疊，強制設定負距離
             if large_overlap_detected['major_overlap']:
-                print(f"⚠️ 檢測到大範圍重疊，調整距離計算")
+                if(DEBUG):
+                    print(f"⚠️ 檢測到大範圍重疊，調整距離計算")
                 # 對於大範圍重疊，將更多點設為負距離
                 overlap_factor = large_overlap_detected['overlap_ratio']
                 force_negative_threshold = 1.0 * overlap_factor  # 根據重疊比例調整
@@ -458,12 +471,13 @@ class GearInterferenceAnalyzer:
                 overlap_ratio = max(overlap_ratio, bbox_overlap_ratio)
         
         if major_overlap:
-            print(f"🚨 檢測到大範圍重疊:")
-            print(f"   中心距離: {center_distance:.2f}mm")
-            print(f"   半徑和: {radius_p + radius_g:.2f}mm")
-            print(f"   重疊程度: {overlap_severity}")
-            print(f"   重疊比例: {overlap_ratio:.2f}")
-            print(f"   包圍盒重疊: {bbox_overlap_ratio:.3f}")
+            if(DEBUG):
+                print(f"🚨 檢測到大範圍重疊:")
+                print(f"   中心距離: {center_distance:.2f}mm")
+                print(f"   半徑和: {radius_p + radius_g:.2f}mm")
+                print(f"   重疊程度: {overlap_severity}")
+                print(f"   重疊比例: {overlap_ratio:.2f}")
+                print(f"   包圍盒重疊: {bbox_overlap_ratio:.3f}")
         
         return {
             'major_overlap': major_overlap,
@@ -756,7 +770,8 @@ class GearInterferenceAnalyzer:
                     large_overlap_bonus = 10  # 輕微重疊
                     
                 base_score += large_overlap_bonus
-                print(f"🚨 大範圍重疊加分: +{large_overlap_bonus} ({overlap_data['overlap_severity']})")
+                if(DEBUG):
+                    print(f"🚨 大範圍重疊加分: +{large_overlap_bonus} ({overlap_data['overlap_severity']})")
         
         # 干涉點密度評分 (0-35) - 使用對數標度來避免快速飽和
         total_interference = statistics.get('total_interference_points', 0)

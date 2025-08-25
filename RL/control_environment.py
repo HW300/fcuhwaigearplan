@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 from typing import Tuple, Union
 from features.Bevel_gear_vibration_features import compute_feature_values_from_vibration
 
@@ -69,15 +70,19 @@ def run_analysis_and_get_time_signal_real(x_distance: float, y_distance: float,
 
 def run_analysis_and_get_time_signal(x_distance: float, y_distance: float,
                                      offset_deg: float = 10.0,
-                                     sample_rate: int = 100) -> Tuple[np.ndarray, np.ndarray]:
-    """強制使用真實模組流程，回傳 (time, vibration_signal)。"""
-    # run_analysis_and_get_time_signal_real(x_distance, y_distance, offset_deg, sample_rate)
+                                     sample_rate: int = 150) -> dict:
+    """執行真實模組流程並回傳『扁平特徵 dict』供 RL 控制器使用。
 
+    注意：此函式回傳的是 Dict[str, float]（非 JSON 字串）。
+    Keys 例：
+      - Time_rms_x/y/z, Time_crestfactor_x/y/z
+      - Powerspectrum_rms_x/y/z, Powerspectrum_skewness_x/y/z, Powerspectrum_kurtosis_x/y/z
+    """
+    # 取得時間域訊號（真實幾何/分析/模擬流程）
     t, s = run_analysis_and_get_time_signal_real(x_distance, y_distance, offset_deg, sample_rate)
 
-    # 構建 vibration_data dict
+    # 構建 vibration_data dict 給特徵萃取
     assert len(t) == len(s) and len(t) > 0
-    # 估算 fs（或留給函數自行從 time 推估）
     fs = None
     if len(t) > 1:
         dt = float(np.mean(np.diff(t)))
@@ -92,7 +97,7 @@ def run_analysis_and_get_time_signal(x_distance: float, y_distance: float,
 
     features = compute_feature_values_from_vibration(vibration_data)
 
-    # 基本檢查
+    # 萃取並轉成純 float（避免 numpy scalar）
     required_keys = [
         'Time_skewness_x', 'Time_kurtosis_x', 'Time_rms_x', 'Time_crestfactor_x',
         'Powerspectrum_skewness_x', 'Powerspectrum_kurtosis_x', 'Powerspectrum_rms_x', 'Powerspectrum_crestfactor_x',
@@ -101,14 +106,14 @@ def run_analysis_and_get_time_signal(x_distance: float, y_distance: float,
         'Time_skewness_z', 'Time_kurtosis_z', 'Time_rms_z', 'Time_crestfactor_z',
         'Powerspectrum_skewness_z', 'Powerspectrum_kurtosis_z', 'Powerspectrum_rms_z', 'Powerspectrum_crestfactor_z'
     ]
-    results = {}
+
+    results: dict[str, float] = {}
     for k in required_keys:
-        assert k in features
-        # 確保為可轉換為浮點的字串
+        if k not in features:
+            raise KeyError(f"缺少特徵鍵: {k}")
+        # 轉成 Python float
         results[k] = float(features[k])
-    
-    results = json.dumps(results, indent=4, ensure_ascii=False)
-    print (results)
+
     return results
         
 
@@ -124,7 +129,7 @@ def plot_vibration_time_signal(time: np.ndarray, signal: np.ndarray,
     try:
         import matplotlib.pyplot as plt
     except ImportError:
-        print("⚠️ 無法繪圖：未安裝 matplotlib。可先安裝：pip install matplotlib")
+        print("[DEBUG] ⚠️ 無法繪圖：未安裝 matplotlib。可先安裝：pip install matplotlib")
         return False
 
     fig, ax = plt.subplots(figsize=(10, 4))
@@ -135,7 +140,7 @@ def plot_vibration_time_signal(time: np.ndarray, signal: np.ndarray,
     ax.grid(True, alpha=0.3)
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"💾 已儲存圖檔: {save_path}")
+        print(f"[DEBUG] 💾 已儲存圖檔: {save_path}")
     if show:
         plt.show()
     return True
@@ -161,7 +166,7 @@ def build_interference_figure(pinion_vertices: np.ndarray, pinion_faces: np.ndar
     try:
         import plotly.graph_objects as go
     except ImportError:
-        print("⚠️ 無法繪製 3D：未安裝 plotly。可先安裝：pip install plotly")
+        print("[DEBUG] ⚠️ 無法繪製 3D：未安裝 plotly。可先安裝：pip install plotly")
         return None
 
     fig = go.Figure()
@@ -212,7 +217,7 @@ def build_interference_figure(pinion_vertices: np.ndarray, pinion_faces: np.ndar
                 color='crimson', opacity=0.35, name='干涉凸包（面）'
             ))
         except Exception as e:
-            print(f"⚠️ 無法建立干涉凸包：{e}")
+            print(f"[DEBUG] ⚠️ 無法建立干涉凸包：{e}")
 
     fig.update_layout(
         title=title or '齒輪干涉區域可視化',
@@ -243,7 +248,7 @@ if __name__ == '__main__':
     run_analysis_and_get_time_signal(args.x, args.y, args.offset, args.sample)
     # try:
     #     t, s = run_analysis_and_get_time_signal_real(args.x, args.y, args.offset, args.sample)
-    #     print(f"time len={len(t)}, signal len={len(s)}")
+    #     print(f"[DEBUG] time len={len(t)}, signal len={len(s)}")
     #     plot_vibration_time_signal(
     #         t, s,
     #         title=f"Vibration (x={args.x}, y={args.y}, offset={args.offset}°, sample={args.sample})",
@@ -278,7 +283,7 @@ if __name__ == '__main__':
     #             visualizer.add_interference_visualization(analysis.get('interference_points', {}))
     #             fig = visualizer.fig
     #         except Exception as e:
-    #             print(f"⚠️ GearVisualizer 產生圖形失敗，改用凸包回退：{e}")
+    #             print(f"[DEBUG] ⚠️ GearVisualizer 產生圖形失敗，改用凸包回退：{e}")
     #             fig = build_interference_figure(
     #                 vp, fp, vg, fg, analysis,
     #                 title=f"干涉區域 (x={args.x}, y={args.y}, offset={args.offset}°, sample={args.sample})"
@@ -288,10 +293,10 @@ if __name__ == '__main__':
     #             if args.save_html:
     #                 try:
     #                     fig.write_html(args.save_html)
-    #                     print(f"💾 已儲存 3D 視覺化 HTML: {args.save_html}")
+    #                     print(f"[DEBUG] 💾 已儲存 3D 視覺化 HTML: {args.save_html}")
     #                 except Exception as e:
-    #                     print(f"⚠️ 儲存 HTML 失敗：{e}")
+    #                     print(f"[DEBUG] ⚠️ 儲存 HTML 失敗：{e}")
     #             if not args.no_show:
     #                 fig.show()
     # except Exception as e:
-    #     print(f"❌ 執行失敗: {e}")
+    #     print(f"[DEBUG] ❌ 執行失敗: {e}")

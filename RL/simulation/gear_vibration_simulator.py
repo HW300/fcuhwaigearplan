@@ -2,9 +2,20 @@
 增強版齒輪振動模擬器
 修正齒輪頻率重疊問題，增加更多諧波，並移除相位圖
 """
+
+
+import os
+        
 import numpy as np
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DEBUG=int(os.getenv("DEBUG", 0))
+
+
 from plotly.subplots import make_subplots
 try:
     from config_manager import ConfigManager
@@ -40,7 +51,8 @@ class GearVibrationSimulator:
         Returns:
             dict: 包含振動信號和FFT分析結果
         """
-        print("=== 開始振動信號模擬 ===")
+        if(DEBUG):
+            print("=== 開始振動信號模擬 ===")
         
         # 從配置文件或使用預設值獲取齒輪參數
         if ConfigManager and self.config:
@@ -77,13 +89,14 @@ class GearVibrationSimulator:
         
         # 從干涉分析獲取參數
         severity_score = self._extract_severity_score(interference_analysis)
-        
-        print(f"齒輪參數:")
-        print(f"  小齒輪: {z_pinion}齒, {rpm_pinion} RPM ({f_pinion:.2f} Hz)")
-        print(f"  大齒輪: {z_gear}齒, {rpm_gear} RPM ({f_gear:.2f} Hz)")
-        print(f"  齒數比: {gear_ratio:.2f}:1")
-        print(f"  GMF (嚙合頻率): {GMF:.1f} Hz")
-        print(f"干涉嚴重程度分數: {severity_score:.1f}/100")
+
+        if(DEBUG):
+            print(f"齒輪參數:")
+            print(f"  小齒輪: {z_pinion}齒, {rpm_pinion} RPM ({f_pinion:.2f} Hz)")
+            print(f"  大齒輪: {z_gear}齒, {rpm_gear} RPM ({f_gear:.2f} Hz)")
+            print(f"  齒數比: {gear_ratio:.2f}:1")
+            print(f"  GMF (嚙合頻率): {GMF:.1f} Hz")
+            print(f"干涉嚴重程度分數: {severity_score:.1f}/100")
         
         # 基本振幅設定
         base_amplitude = 1.0
@@ -138,10 +151,10 @@ class GearVibrationSimulator:
         noise_level = noise_base + (severity_score / 100) * 0.5
         noise = np.random.normal(0, noise_level, len(self.time))
         vibration_signal += noise
-        
-        print(f"故障倍增因子: {fault_multiplier:.2f}")
-        print(f"噪音等級: {noise_level:.3f}")
-        
+        if(DEBUG):
+            print(f"故障倍增因子: {fault_multiplier:.2f}")
+            print(f"噪音等級: {noise_level:.3f}")
+
         # 7. FFT分析（不計算相位）
         fft_results = self._perform_fft_analysis(vibration_signal)
         

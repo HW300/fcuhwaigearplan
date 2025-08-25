@@ -5,6 +5,12 @@
 import json
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+DEBUG=int(os.getenv("DEBUG", 0))
+# print(f"[DEBUG] DEBUG value loaded: {DEBUG}")
+
 class ConfigManager:
     def __init__(self, config_path=None):
         """
@@ -24,7 +30,9 @@ class ConfigManager:
         try:
             with open(self.config_path, 'r', encoding='utf-8') as f:
                 config = json.load(f)
-            print(f"✅ 配置文件載入成功: {self.config_path}")
+            if(DEBUG):
+                print(DEBUG)
+                print(f"✅ 配置文件載入成功: {self.config_path}")
             return config
         except FileNotFoundError:
             print(f"⚠️ 配置文件不存在: {self.config_path}")

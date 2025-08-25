@@ -5,6 +5,10 @@ import trimesh
 import numpy as np
 import math
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DEBUG=int(os.getenv("DEBUG", 0))
 
 class GearLoader:
     def __init__(self, stl_path="../STL_data"):
@@ -28,9 +32,10 @@ class GearLoader:
         try:
             pinion_mesh = trimesh.load_mesh(self.pinion_path)
             gear_mesh = trimesh.load_mesh(self.gear_path)
-            print(f"成功載入齒輪檔案:")
-            print(f"- 小齒輪: {self.pinion_path}")
-            print(f"- 大齒輪: {self.gear_path}")
+            if (DEBUG):
+                print(f"成功載入齒輪檔案:")
+                print(f"- 小齒輪: {self.pinion_path}")
+                print(f"- 大齒輪: {self.gear_path}")
             return pinion_mesh, gear_mesh
         except Exception as e:
             print(f"載入STL檔案時發生錯誤: {e}")

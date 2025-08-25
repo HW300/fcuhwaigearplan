@@ -4,6 +4,12 @@
 import trimesh
 import numpy as np
 import math
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DEBUG=int(os.getenv("DEBUG", 0))
+
 
 class GearTransformer:
     def __init__(self):
@@ -126,6 +132,7 @@ class GearTransformer:
         if self.pinion_original is not None and self.gear_original is not None:
             self.pinion_mesh = self.pinion_original.copy()
             self.gear_mesh = self.gear_original.copy()
-            print("齒輪已重置到原始狀態")
+            if(DEBUG):
+                print("齒輪已重置到原始狀態")
         else:
             print("警告: 沒有原始齒輪資料可以重置")
