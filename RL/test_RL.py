@@ -26,8 +26,9 @@ if __name__ == "__main__":
 
     # 限位（單位與你的 run_analysis 相同）
 
-    start_x=14
-    start_y=-21
+    start_x=16
+    start_y=-26
+
     std_x=24
     std_y=-31
 
